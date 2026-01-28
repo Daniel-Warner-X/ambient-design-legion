@@ -13,15 +13,15 @@ Ambient is a way to amplify your impact, scaling effort non-linearly to create m
 
 ## How Can Ambient amplify the impact of design?
 
-— Generate synthetic mood boards, user journey maps, and other cognitive artifacts based on context sources
-— Generate or update entire synthetic design systems based on context sources
-— Generate relevant, specific creative solutions and proposals on-demand
-— Prototype new features for existing products on demand
-— Synthesize dynamic interfaces built on demand that react to user needs 
-— Improve the quality (usability, accessibility, emotional impact) of a user experience
-— Continual improvement of UX through ongoing analysis and UX bug fixes
-— “Design linting” for checking work against similar patterns, views, user-flows, etc. in an existing user interface as well as pre-defined standards and design systems
-— Automate toil associated with the design process, (ex. Associating new design work to project tracking in Jira or other task management system) 
+* Generate synthetic mood boards, user journey maps, and other cognitive artifacts based on context sources
+* Generate or update entire synthetic design systems based on context sources
+* Generate relevant, specific creative solutions and proposals on-demand
+* Prototype new features for existing products on demand
+* Synthesize dynamic interfaces built on demand that react to user needs
+* Improve the quality (usability, accessibility, emotional impact) of a user experience
+* Continual improvement of UX through ongoing analysis and UX bug fixes
+* “Design linting” for checking work against similar patterns, views, user-flows, etc. in an existing user interface as well as pre-defined standards and design systems
+* Automate toil associated with the design process, (ex. Associating new design work to project tracking in Jira or other task management system) 
 
 ## What is Ambient Design Legion
 
