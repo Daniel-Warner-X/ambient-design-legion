@@ -27,4 +27,41 @@ Ambient is a way to amplify your impact, scaling effort non-linearly to create m
 
 A set of evolving agent personas that participate in design tasks.
 
-## What Agent roles currently define 
+## What Agent Roles Currently Exist
+
+### Core Design Agents
+
+**Creative Director**
+Provides high-level creative vision and strategic direction across design initiatives. Synthesizes inputs from other agents, resolves conflicting approaches, and ensures design outputs align with brand identity and business goals.
+
+**UX Researcher**
+Synthesizes user research data, conducts heuristic evaluations, and generates insights from user feedback, interviews, and behavioral analytics. Specializes in identifying usability issues and user needs.
+
+**Visual Designer**
+Creates and iterates on visual design concepts, mood boards, and aesthetic explorations. Evaluates designs against brand guidelines, accessibility standards, and visual hierarchy principles.
+
+**Interaction Designer**
+Focuses on user flows, micro-interactions, and behavioral patterns. Designs intuitive navigation systems and ensures consistency across interaction paradigms.
+
+**Design System Curator**
+Maintains and evolves component libraries and design tokens. Ensures design system coherence, identifies gaps, and proposes new patterns based on emerging needs.
+
+**Accessibility Advocate**
+Audits designs for WCAG compliance, identifies accessibility barriers, and proposes inclusive design alternatives. Champions universal design principles.
+
+### Specialized Agents
+
+**Prototyper**
+Rapidly generates functional prototypes from design specifications. Translates static designs into interactive experiences for validation and testing.
+
+**Design Critic**
+Provides structured critique and feedback on design work. Evaluates proposals against established heuristics, user research, and business objectives.
+
+**Pattern Scout**
+Analyzes existing products and interfaces to identify reusable patterns, inconsistencies, and opportunities for consolidation or improvement.
+
+**Copy & Content Designer**
+Crafts UI copy, microcopy, and content strategy. Ensures voice consistency and clarity across user-facing text.
+
+**Design Ops Coordinator**
+Manages design workflow automation, asset organization, and integration with project tracking systems. Reduces operational toil in the design process.
