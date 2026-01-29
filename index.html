@@ -175,6 +175,27 @@
             color: black;
         }
 
+        .filename-tooltip {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.85);
+            color: white;
+            padding: 0.5rem;
+            font-size: 0.7rem;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 5;
+            pointer-events: none;
+            word-break: break-all;
+        }
+
+        .grid-item:hover .filename-tooltip {
+            opacity: 1;
+        }
+
         .file-input-wrapper {
             display: inline-block;
         }
@@ -188,7 +209,8 @@
         .eyedropper-btn,
         .code-btn,
         .import-btn,
-        .clear-btn {
+        .clear-btn,
+        .add-font-btn {
             background: black;
             color: white;
             padding: 0.5rem 1rem;
@@ -210,9 +232,48 @@
         .eyedropper-btn:hover,
         .code-btn:hover,
         .import-btn:hover,
-        .clear-btn:hover {
+        .clear-btn:hover,
+        .add-font-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .font-input {
+            background: black;
+            color: white;
+            padding: 0.5rem;
+            border: 1px solid white;
+            border-radius: 0;
+            font-size: 0.75rem;
+            font-family: 'IBM Plex Mono', monospace;
+            height: 32px;
+            width: 150px;
+        }
+
+        .font-input::placeholder {
+            color: #808080;
+        }
+
+        .font-input:focus {
+            outline: none;
+            border-color: #ffffff;
+        }
+
+        .add-font-section {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: rgb(59, 59, 59);
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .add-font-section label {
+            color: #808080;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         .color-chips {
@@ -760,6 +821,12 @@
                 <input type="color" class="type-color-picker" value="#808080">
             </div>
         </div>
+
+        <div class="add-font-section">
+            <label for="font-input">Add Google Font</label>
+            <input type="text" id="font-input" class="font-input" placeholder="Font name (e.g., Roboto)">
+            <button id="add-font-btn" class="add-font-btn">Add Font</button>
+        </div>
     </section>
 
     <script>
@@ -770,6 +837,82 @@
         const spacingSlider = document.getElementById('spacing-slider');
 
         let draggedItem = null;
+        let loadedCustomFonts = new Set();
+
+        function loadGoogleFont(fontName) {
+            // Convert font name to URL format (e.g., "Source Sans Pro" -> "Source+Sans+Pro")
+            const fontUrl = fontName.replace(/\s+/g, '+');
+
+            // Check if font is already loaded
+            if (loadedCustomFonts.has(fontName)) {
+                return true;
+            }
+
+            // Create link element for Google Font
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = `https://fonts.googleapis.com/css2?family=${fontUrl}:wght@400;600&display=swap`;
+            document.head.appendChild(link);
+
+            loadedCustomFonts.add(fontName);
+            return true;
+        }
+
+        function createTypeSample(fontName, isCustom = false, textColor = '#808080', backgroundColor = '#3b3b3b') {
+            const typeGrid = document.querySelector('.type-grid');
+
+            const typeSample = document.createElement('div');
+            typeSample.className = 'type-sample';
+            typeSample.style.fontFamily = `'${fontName}', sans-serif`;
+            typeSample.style.background = backgroundColor;
+            if (isCustom) {
+                typeSample.setAttribute('data-custom-font', 'true');
+            }
+
+            typeSample.innerHTML = `
+                <button class="type-remove-btn">X</button>
+                <div class="type-sample-header">
+                    <div class="font-name">${fontName}</div>
+                </div>
+                <h1>Heading One</h1>
+                <h2>Heading Two</h2>
+                <p>Ambient Code Platform is a way to amplify your impact, scaling effort non-linearly to create deeper solutions in less time than it would take a human user to do this work serially. It is a flexible platform to enable and develop new ways of working. It is a cluster for hosting multiple, simultaneous agent sessions. It is a workflow engine for fine-grained controls over context, skills, commands, etc. It is a nexus for data stored in internal systems. It is an agent-assisted interface for multiple hosted 3rd-party systems. It is a way to to keep up with the pace of innovation by leveraging AI-native tools as they develop.</p>
+                <ul>
+                    <li>List item one</li>
+                    <li>List item two</li>
+                    <li>List item three</li>
+                </ul>
+                <input type="color" class="type-bg-picker" value="${backgroundColor}">
+                <input type="color" class="type-color-picker" value="${textColor}">
+            `;
+
+            // Apply text color to all elements
+            typeSample.querySelectorAll('.font-name, h1, h2, p, ul').forEach((element) => {
+                element.style.color = textColor;
+            });
+
+            // Add event listeners for color pickers
+            const textPicker = typeSample.querySelector('.type-color-picker');
+            textPicker.addEventListener('input', (event) => {
+                const color = event.target.value;
+                typeSample.querySelectorAll('.font-name, h1, h2, p, ul').forEach((element) => {
+                    element.style.color = color;
+                });
+            });
+
+            const bgPicker = typeSample.querySelector('.type-bg-picker');
+            bgPicker.addEventListener('input', (event) => {
+                typeSample.style.background = event.target.value;
+            });
+
+            // Add remove button listener
+            const removeBtn = typeSample.querySelector('.type-remove-btn');
+            removeBtn.addEventListener('click', () => {
+                typeSample.remove();
+            });
+
+            typeGrid.appendChild(typeSample);
+        }
 
         function addDragAndDropListeners(gridItem) {
             gridItem.draggable = true;
@@ -866,9 +1009,14 @@
                     gridItem.classList.toggle('enlarged');
                 };
 
+                const filenameTooltip = document.createElement('div');
+                filenameTooltip.className = 'filename-tooltip';
+                filenameTooltip.textContent = filename;
+
                 gridItem.appendChild(img);
                 gridItem.appendChild(removeBtn);
                 gridItem.appendChild(enlargeBtn);
+                gridItem.appendChild(filenameTooltip);
                 addDragAndDropListeners(gridItem);
                 grid.appendChild(gridItem);
             });
@@ -909,9 +1057,14 @@
                         gridItem.classList.toggle('enlarged');
                     };
 
+                    const filenameTooltip = document.createElement('div');
+                    filenameTooltip.className = 'filename-tooltip';
+                    filenameTooltip.textContent = file.name;
+
                     gridItem.appendChild(img);
                     gridItem.appendChild(removeBtn);
                     gridItem.appendChild(enlargeBtn);
+                    gridItem.appendChild(filenameTooltip);
                     addDragAndDropListeners(gridItem);
                     grid.appendChild(gridItem);
                 }
@@ -1056,6 +1209,35 @@
             });
         });
 
+        // Add custom Google Font
+        const fontInput = document.getElementById('font-input');
+        const addFontBtn = document.getElementById('add-font-btn');
+
+        addFontBtn.addEventListener('click', () => {
+            const fontName = fontInput.value.trim();
+
+            if (!fontName) {
+                alert('Please enter a Google Font name');
+                return;
+            }
+
+            // Load the font from Google Fonts
+            loadGoogleFont(fontName);
+
+            // Create a new type sample with this font
+            createTypeSample(fontName, true);
+
+            // Clear the input
+            fontInput.value = '';
+        });
+
+        // Allow pressing Enter to add font
+        fontInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                addFontBtn.click();
+            }
+        });
+
         // Code modal functionality
         const codeBtn = document.getElementById('code-btn');
         const codeModal = document.getElementById('code-modal');
@@ -1101,8 +1283,22 @@
             const visibleTypeSamples = document.querySelectorAll('.type-sample');
             visibleTypeSamples.forEach((sample) => {
                 const fontName = sample.querySelector('.font-name');
-                if (fontName) {
-                    data.fonts.push(fontName.textContent.trim());
+                const textColorPicker = sample.querySelector('.type-color-picker');
+                const bgColorPicker = sample.querySelector('.type-bg-picker');
+                const isCustom = sample.hasAttribute('data-custom-font');
+
+                if (fontName && sample.style.display !== 'none') {
+                    const fontData = {
+                        name: fontName.textContent.trim(),
+                        textColor: textColorPicker ? textColorPicker.value : '#808080',
+                        backgroundColor: bgColorPicker ? bgColorPicker.value : '#3b3b3b'
+                    };
+
+                    if (isCustom) {
+                        fontData.custom = true;
+                    }
+
+                    data.fonts.push(fontData);
                 }
             });
 
@@ -1199,9 +1395,14 @@
                             gridItem.classList.toggle('enlarged');
                         };
 
+                        const filenameTooltip = document.createElement('div');
+                        filenameTooltip.className = 'filename-tooltip';
+                        filenameTooltip.textContent = imageData.name;
+
                         gridItem.appendChild(img);
                         gridItem.appendChild(removeBtn);
                         gridItem.appendChild(enlargeBtn);
+                        gridItem.appendChild(filenameTooltip);
                         addDragAndDropListeners(gridItem);
                         grid.appendChild(gridItem);
                     });
@@ -1212,18 +1413,70 @@
                     }
                 }
 
-                // Import fonts (show only selected type samples)
+                // Import fonts (show only selected type samples and restore colors)
                 if (data.fonts && Array.isArray(data.fonts)) {
-                    const allTypeSamples = document.querySelectorAll('.type-sample');
+                    const allTypeSamples = document.querySelectorAll('.type-sample:not([data-custom-font])');
+
+                    // Get font names from the data (support both string and object formats)
+                    const fontNames = data.fonts.map(f => typeof f === 'string' ? f : f.name);
+
+                    // Hide all built-in type samples first
                     allTypeSamples.forEach(sample => {
                         const fontName = sample.querySelector('.font-name');
                         if (fontName) {
                             const fontText = fontName.textContent.trim();
-                            if (data.fonts.includes(fontText)) {
+                            const fontData = data.fonts.find(f =>
+                                (typeof f === 'string' ? f : f.name) === fontText
+                            );
+
+                            if (fontData) {
                                 sample.style.display = 'block';
+
+                                // If fontData is an object with colors, restore them
+                                if (typeof fontData === 'object') {
+                                    // Restore background color
+                                    if (fontData.backgroundColor) {
+                                        sample.style.background = fontData.backgroundColor;
+                                        const bgPicker = sample.querySelector('.type-bg-picker');
+                                        if (bgPicker) {
+                                            bgPicker.value = fontData.backgroundColor;
+                                        }
+                                    }
+
+                                    // Restore text color
+                                    if (fontData.textColor) {
+                                        const textPicker = sample.querySelector('.type-color-picker');
+                                        if (textPicker) {
+                                            textPicker.value = fontData.textColor;
+                                        }
+
+                                        // Update all text elements
+                                        sample.querySelectorAll('.font-name, h1, h2, p, ul').forEach((element) => {
+                                            element.style.color = fontData.textColor;
+                                        });
+                                    }
+                                }
                             } else {
                                 sample.style.display = 'none';
                             }
+                        }
+                    });
+
+                    // Remove any existing custom fonts before importing
+                    document.querySelectorAll('.type-sample[data-custom-font]').forEach(sample => {
+                        sample.remove();
+                    });
+
+                    // Create custom font samples
+                    data.fonts.forEach(fontData => {
+                        if (typeof fontData === 'object' && fontData.custom) {
+                            loadGoogleFont(fontData.name);
+                            createTypeSample(
+                                fontData.name,
+                                true,
+                                fontData.textColor || '#808080',
+                                fontData.backgroundColor || '#3b3b3b'
+                            );
                         }
                     });
                 }
