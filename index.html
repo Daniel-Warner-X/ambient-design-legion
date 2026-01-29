@@ -88,11 +88,21 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             background: white;
             aspect-ratio: 1;
+            cursor: grab;
         }
 
         .grid-item:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2), 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .grid-item.dragging {
+            opacity: 0.5;
+            cursor: grabbing;
+        }
+
+        .grid-item.drag-over {
+            border: 2px solid white;
         }
 
         .grid-item.enlarged {
@@ -753,47 +763,83 @@
     </section>
 
     <script>
-        // List of image files to display
-        // Update this array with your image filenames
-        const imageFiles = [
-            'Letter - 10.png',
-            'Letter - 11.png',
-            'Letter - 12.png',
-            'Letter - 13.png',
-            'Letter - 14.png',
-            'Letter - 15.png',
-            'Letter - 16.png',
-            'Letter - 17.png',
-            'Letter - 18.png',
-            'Letter - 2.png',
-            'Letter - 3.png',
-            'Letter - 4.png',
-            'Letter - 5.png',
-            'Letter - 6.png',
-            'Letter - 7.png',
-            'Letter - 8.png',
-            'Letter - 9.png',
-        ];
-
         const grid = document.getElementById('grid');
         const emptyState = document.getElementById('empty-state');
         const fileInput = document.getElementById('file-input');
         const bgColorPicker = document.getElementById('bg-color');
         const spacingSlider = document.getElementById('spacing-slider');
 
-        function loadImages() {
+        let draggedItem = null;
+
+        function addDragAndDropListeners(gridItem) {
+            gridItem.draggable = true;
+
+            gridItem.addEventListener('dragstart', (e) => {
+                draggedItem = gridItem;
+                gridItem.classList.add('dragging');
+                e.dataTransfer.effectAllowed = 'move';
+            });
+
+            gridItem.addEventListener('dragend', (e) => {
+                gridItem.classList.remove('dragging');
+                // Remove drag-over class from all items
+                document.querySelectorAll('.grid-item').forEach(item => {
+                    item.classList.remove('drag-over');
+                });
+                draggedItem = null;
+            });
+
+            gridItem.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                e.dataTransfer.dropEffect = 'move';
+
+                if (gridItem !== draggedItem) {
+                    gridItem.classList.add('drag-over');
+                }
+            });
+
+            gridItem.addEventListener('dragleave', (e) => {
+                gridItem.classList.remove('drag-over');
+            });
+
+            gridItem.addEventListener('drop', (e) => {
+                e.preventDefault();
+                gridItem.classList.remove('drag-over');
+
+                if (draggedItem && gridItem !== draggedItem) {
+                    // Get all grid items
+                    const allItems = Array.from(grid.querySelectorAll('.grid-item'));
+                    const draggedIndex = allItems.indexOf(draggedItem);
+                    const targetIndex = allItems.indexOf(gridItem);
+
+                    // Reorder by inserting dragged item before or after target
+                    if (draggedIndex < targetIndex) {
+                        gridItem.parentNode.insertBefore(draggedItem, gridItem.nextSibling);
+                    } else {
+                        gridItem.parentNode.insertBefore(draggedItem, gridItem);
+                    }
+                }
+            });
+        }
+
+        async function loadImages() {
             grid.innerHTML = '';
 
-            if (imageFiles.length === 0) {
-                grid.style.display = 'none';
-                emptyState.style.display = 'block';
-                return;
-            }
+            try {
+                // Fetch image list from server
+                const response = await fetch('/api/images');
+                const imageFiles = await response.json();
 
-            grid.style.display = 'grid';
-            emptyState.style.display = 'none';
+                if (imageFiles.length === 0) {
+                    grid.style.display = 'none';
+                    emptyState.style.display = 'block';
+                    return;
+                }
 
-            imageFiles.forEach((filename) => {
+                grid.style.display = 'grid';
+                emptyState.style.display = 'none';
+
+                imageFiles.forEach((filename) => {
                 const gridItem = document.createElement('div');
                 gridItem.className = 'grid-item';
 
@@ -823,8 +869,14 @@
                 gridItem.appendChild(img);
                 gridItem.appendChild(removeBtn);
                 gridItem.appendChild(enlargeBtn);
+                addDragAndDropListeners(gridItem);
                 grid.appendChild(gridItem);
             });
+            } catch (error) {
+                console.error('Error loading images:', error);
+                grid.style.display = 'none';
+                emptyState.style.display = 'block';
+            }
         }
 
         // Handle file selection (for preview purposes)
@@ -860,6 +912,7 @@
                     gridItem.appendChild(img);
                     gridItem.appendChild(removeBtn);
                     gridItem.appendChild(enlargeBtn);
+                    addDragAndDropListeners(gridItem);
                     grid.appendChild(gridItem);
                 }
             });
@@ -1149,6 +1202,7 @@
                         gridItem.appendChild(img);
                         gridItem.appendChild(removeBtn);
                         gridItem.appendChild(enlargeBtn);
+                        addDragAndDropListeners(gridItem);
                         grid.appendChild(gridItem);
                     });
 

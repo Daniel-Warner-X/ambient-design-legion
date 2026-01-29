@@ -1,5 +1,34 @@
 # Ambient Design Legion
 
+## Mood Board Application
+
+A web-based mood board tool for curating design inspiration with color palettes, images, and typography.
+
+### Quick Start
+
+```bash
+# Install dependencies (first time only)
+npm install
+
+# Start the server
+npm start
+```
+
+Then open `http://localhost:8000/index.html` in your browser.
+
+### Features
+
+- **Color Palette Builder**: Use the eyedropper to pick colors from anywhere on the page (max 5)
+- **Image Management**: Auto-loads images from the `mood/` folder
+- **Typography Samples**: Preview different font families with sample text
+- **Import/Export**: Save and restore your curated selections as JSON
+- **Customizable**: Adjust spacing, background colors, and text colors
+
+### Adding Images
+
+Simply drop image files into the `mood/` folder and refresh the page. The server automatically discovers new images.
+
+---
 
 ## What is Ambient Code Platform?
 
