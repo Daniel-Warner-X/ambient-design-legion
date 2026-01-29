@@ -1030,7 +1030,6 @@
         // Handle file selection (for preview purposes)
         fileInput.addEventListener('change', (event) => {
             const files = event.target.files;
-            grid.innerHTML = '';
             grid.style.display = 'grid';
             emptyState.style.display = 'none';
 
@@ -1071,7 +1070,7 @@
             });
 
             // Show instructions
-            alert('To permanently add these images:\n1. Save them to the "mood" folder\n2. Add their filenames to the imageFiles array in the HTML file\n3. Refresh the page');
+            alert('To permanently add these images:\n1. Save them to the "mood" folder\n2. Refresh the page');
         });
 
         // Handle background color change
