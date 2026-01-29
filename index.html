@@ -173,7 +173,12 @@
             display: none;
         }
 
-        .upload-btn {
+        .upload-btn,
+        .header-toggle-btn,
+        .eyedropper-btn,
+        .code-btn,
+        .import-btn,
+        .clear-btn {
             background: black;
             color: white;
             padding: 0.5rem 1rem;
@@ -184,45 +189,18 @@
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .upload-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        .header-toggle-btn {
-            background: black;
-            color: white;
-            padding: 0.5rem 1rem;
-            border: 1px solid white;
-            border-radius: 0;
-            font-size: 0.75rem;
-            font-weight: 400;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .header-toggle-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        .eyedropper-btn {
-            background: black;
-            color: white;
-            padding: 0.5rem 1rem;
-            border: 1px solid white;
-            border-radius: 0;
-            font-size: 0.75rem;
-            font-weight: 400;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .eyedropper-btn:hover {
+        .upload-btn:hover,
+        .header-toggle-btn:hover,
+        .eyedropper-btn:hover,
+        .code-btn:hover,
+        .import-btn:hover,
+        .clear-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
@@ -285,62 +263,8 @@
             opacity: 1;
         }
 
-        .code-btn {
-            background: black;
-            color: white;
-            padding: 0.5rem 1rem;
-            border: 1px solid white;
-            border-radius: 0;
-            font-size: 0.75rem;
-            font-weight: 400;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .code-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        .import-btn {
-            background: black;
-            color: white;
-            padding: 0.5rem 1rem;
-            border: 1px solid white;
-            border-radius: 0;
-            font-size: 0.75rem;
-            font-weight: 400;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .import-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
         input[type="file"].json-input {
             display: none;
-        }
-
-        .clear-btn {
-            background: black;
-            color: white;
-            padding: 0.5rem 1rem;
-            border: 1px solid white;
-            border-radius: 0;
-            font-size: 0.75rem;
-            font-weight: 400;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .clear-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         .code-modal {
@@ -697,7 +621,7 @@
                 <label for="spacing-slider">Spacing</label>
                 <input type="range" id="spacing-slider" min="0" max="24" value="24">
             </div>
-            <button id="eyedropper-btn" class="eyedropper-btn">💧</button>
+            <button id="eyedropper-btn" class="eyedropper-btn">Palette</button>
             <div id="color-chips" class="color-chips"></div>
             <button id="code-btn" class="code-btn">Export</button>
             <label for="json-input" class="import-btn">Import</label>
@@ -707,7 +631,7 @@
                 <label for="file-input" class="upload-btn">Add Image</label>
                 <input type="file" id="file-input" accept="image/*" multiple>
             </div>
-            <button id="header-toggle" class="header-toggle-btn">X</button>
+            <button id="header-toggle" class="header-toggle-btn">Hide Header</button>
         </div>
     </header>
 
@@ -1098,10 +1022,24 @@
             const visibleImages = grid.querySelectorAll('.grid-item:not([style*="display: none"])');
             visibleImages.forEach((item) => {
                 const img = item.querySelector('img');
-                if (img) {
+                if (img && !img.src.startsWith('blob:')) {
+                    // Convert absolute file:// URLs to relative paths
+                    let relativeSrc = img.src;
+
+                    // Extract just the relative path from file:// URLs
+                    if (img.src.startsWith('file://')) {
+                        const url = new URL(img.src);
+                        const pathname = decodeURIComponent(url.pathname);
+                        // Extract everything after the last occurrence of the project directory
+                        const match = pathname.match(/mood\/.+$/);
+                        if (match) {
+                            relativeSrc = match[0];
+                        }
+                    }
+
                     data.images.push({
                         name: img.alt,
-                        src: img.src
+                        src: relativeSrc
                     });
                 }
             });
