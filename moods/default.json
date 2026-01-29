@@ -1,0 +1,80 @@
+{
+    "colors": [],
+    "images": [
+      {
+        "name": "Letter - 10.png",
+        "src": "file:///Users/dawarner/Documents/PROJECTS/ambient-design-legion/mood/Letter%20-%2010.png"
+      },
+      {
+        "name": "Letter - 11.png",
+        "src": "file:///Users/dawarner/Documents/PROJECTS/ambient-design-legion/mood/Letter%20-%2011.png"
+      },
+      {
+        "name": "Letter - 12.png",
+        "src": "file:///Users/dawarner/Documents/PROJECTS/ambient-design-legion/mood/Letter%20-%2012.png"
+      },
+      {
+        "name": "Letter - 13.png",
+        "src": "file:///Users/dawarner/Documents/PROJECTS/ambient-design-legion/mood/Letter%20-%2013.png"
+      },
+      {
+        "name": "Letter - 14.png",
+        "src": "file:///Users/dawarner/Documents/PROJECTS/ambient-design-legion/mood/Letter%20-%2014.png"
+      },
+      {
+        "name": "Letter - 15.png",
+        "src": "file:///Users/dawarner/Documents/PROJECTS/ambient-design-legion/mood/Letter%20-%2015.png"
+      },
+      {
+        "name": "Letter - 16.png",
+        "src": "file:///Users/dawarner/Documents/PROJECTS/ambient-design-legion/mood/Letter%20-%2016.png"
+      },
+      {
+        "name": "Letter - 17.png",
+        "src": "file:///Users/dawarner/Documents/PROJECTS/ambient-design-legion/mood/Letter%20-%2017.png"
+      },
+      {
+        "name": "Letter - 18.png",
+        "src": "file:///Users/dawarner/Documents/PROJECTS/ambient-design-legion/mood/Letter%20-%2018.png"
+      },
+      {
+        "name": "Letter - 2.png",
+        "src": "file:///Users/dawarner/Documents/PROJECTS/ambient-design-legion/mood/Letter%20-%202.png"
+      },
+      {
+        "name": "Letter - 3.png",
+        "src": "file:///Users/dawarner/Documents/PROJECTS/ambient-design-legion/mood/Letter%20-%203.png"
+      },
+      {
+        "name": "Letter - 4.png",
+        "src": "file:///Users/dawarner/Documents/PROJECTS/ambient-design-legion/mood/Letter%20-%204.png"
+      },
+      {
+        "name": "Letter - 5.png",
+        "src": "file:///Users/dawarner/Documents/PROJECTS/ambient-design-legion/mood/Letter%20-%205.png"
+      },
+      {
+        "name": "Letter - 6.png",
+        "src": "file:///Users/dawarner/Documents/PROJECTS/ambient-design-legion/mood/Letter%20-%206.png"
+      },
+      {
+        "name": "Letter - 7.png",
+        "src": "file:///Users/dawarner/Documents/PROJECTS/ambient-design-legion/mood/Letter%20-%207.png"
+      },
+      {
+        "name": "Letter - 8.png",
+        "src": "file:///Users/dawarner/Documents/PROJECTS/ambient-design-legion/mood/Letter%20-%208.png"
+      },
+      {
+        "name": "Letter - 9.png",
+        "src": "file:///Users/dawarner/Documents/PROJECTS/ambient-design-legion/mood/Letter%20-%209.png"
+      }
+    ],
+    "fonts": [
+      "IBM Plex Sans",
+      "Geist",
+      "Inter",
+      "Source Code Pro",
+      "Source Serif"
+    ]
+  }
