@@ -676,6 +676,46 @@
         .font-source-serif {
             font-family: 'Source Serif 4', serif;
         }
+
+        .thematic-text-section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+            background: rgb(59, 59, 59);
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .thematic-text-section label {
+            color: #808080;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .thematic-text-input {
+            flex: 1;
+            min-width: 200px;
+            background: black;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: 1px solid white;
+            border-radius: 0;
+            font-size: 0.875rem;
+            font-family: 'IBM Plex Mono', monospace;
+            height: 40px;
+        }
+
+        .thematic-text-input::placeholder {
+            color: #808080;
+        }
+
+        .thematic-text-input:focus {
+            outline: none;
+            border-color: #ffffff;
+        }
     </style>
 </head>
 <body>
@@ -728,6 +768,11 @@
             <p>Add some images to get started!</p>
         </div>
     </div>
+
+    <section class="thematic-text-section">
+        <label for="thematic-text-input">Thematic text</label>
+        <input type="text" id="thematic-text-input" class="thematic-text-input" placeholder="e.g. Calm technology, ambitious goals">
+    </section>
 
     <section id="type" class="type-section">
         <div class="type-grid">
@@ -1245,9 +1290,11 @@
         const codeModalJson = document.getElementById('code-modal-json');
 
         codeBtn.addEventListener('click', () => {
+            const thematicTextInput = document.getElementById('thematic-text-input');
             // Collect all data
             const data = {
                 colors: selectedColors,
+                thematicText: thematicTextInput ? thematicTextInput.value.trim() : '',
                 images: [],
                 fonts: []
             };
@@ -1362,6 +1409,12 @@
                             addColorChip(color);
                         }
                     });
+                }
+
+                // Import thematic text
+                const thematicTextInput = document.getElementById('thematic-text-input');
+                if (thematicTextInput && data.thematicText !== undefined) {
+                    thematicTextInput.value = data.thematicText;
                 }
 
                 // Import images (clear current grid and load new images)

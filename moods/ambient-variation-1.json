@@ -1,0 +1,120 @@
+{
+    "colors": [
+      "#ff611b",
+      "#8b8bff",
+      "#fefefe",
+      "#807f84",
+      "#000000"
+    ],
+    "images": [
+      {
+        "name": "68f7d0ae53b80b9e19d28fc3_Calm Tech Header 3.png",
+        "src": "http://localhost:8000/mood/68f7d0ae53b80b9e19d28fc3_Calm%20Tech%20Header%203.png"
+      },
+      {
+        "name": "aphextwin.png",
+        "src": "http://localhost:8000/mood/aphextwin.png"
+      },
+      {
+        "name": "bigorangetext.png",
+        "src": "http://localhost:8000/mood/bigorangetext.png"
+      },
+      {
+        "name": "blacksky-1.png",
+        "src": "http://localhost:8000/mood/blacksky-1.png"
+      },
+      {
+        "name": "blacksky-2.png",
+        "src": "http://localhost:8000/mood/blacksky-2.png"
+      },
+      {
+        "name": "blacksky-3.png",
+        "src": "http://localhost:8000/mood/blacksky-3.png"
+      },
+      {
+        "name": "bluetext.png",
+        "src": "http://localhost:8000/mood/bluetext.png"
+      },
+      {
+        "name": "codestorage.png",
+        "src": "http://localhost:8000/mood/codestorage.png"
+      },
+      {
+        "name": "dovetail.png",
+        "src": "http://localhost:8000/mood/dovetail.png"
+      },
+      {
+        "name": "graytext.png",
+        "src": "http://localhost:8000/mood/graytext.png"
+      },
+      {
+        "name": "ideo.png",
+        "src": "http://localhost:8000/mood/ideo.png"
+      },
+      {
+        "name": "ideoblog.png",
+        "src": "http://localhost:8000/mood/ideoblog.png"
+      },
+      {
+        "name": "middleageengineering.png",
+        "src": "http://localhost:8000/mood/middleageengineering.png"
+      },
+      {
+        "name": "occupied.png",
+        "src": "http://localhost:8000/mood/occupied.png"
+      },
+      {
+        "name": "pdp10.png",
+        "src": "http://localhost:8000/mood/pdp10.png"
+      },
+      {
+        "name": "poolsideblog.png",
+        "src": "http://localhost:8000/mood/poolsideblog.png"
+      },
+      {
+        "name": "poolsuite.png",
+        "src": "http://localhost:8000/mood/poolsuite.png"
+      },
+      {
+        "name": "severanceui.png",
+        "src": "http://localhost:8000/mood/severanceui.png"
+      },
+      {
+        "name": "teenageengineering.png",
+        "src": "http://localhost:8000/mood/teenageengineering.png"
+      },
+      {
+        "name": "vintagecomputer.png",
+        "src": "http://localhost:8000/mood/vintagecomputer.png"
+      }
+    ],
+    "fonts": [
+      {
+        "name": "IBM Plex Sans",
+        "textColor": "#808080",
+        "backgroundColor": "#3b3b3b"
+      },
+      {
+        "name": "Inter",
+        "textColor": "#808080",
+        "backgroundColor": "#3b3b3b"
+      },
+      {
+        "name": "Source Code Pro",
+        "textColor": "#808080",
+        "backgroundColor": "#3b3b3b"
+      },
+      {
+        "name": "Azeret",
+        "textColor": "#808080",
+        "backgroundColor": "#3b3b3b",
+        "custom": true
+      },
+      {
+        "name": "Azeret mono",
+        "textColor": "#808080",
+        "backgroundColor": "#3b3b3b",
+        "custom": true
+      }
+    ]
+  }
